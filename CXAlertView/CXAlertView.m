@@ -50,7 +50,6 @@ static CXAlertView *__cx_alert_current_view;
 }
 
 @property (nonatomic, strong) UIWindow *oldKeyWindow;
-@property (nonatomic, strong) UIWindow *alertWindow;
 @property (nonatomic, assign, getter = isVisible) BOOL visible;
 
 @property (nonatomic, strong) UIScrollView *topScrollView;
