@@ -45,6 +45,7 @@ typedef void(^CXAlertViewHandler)(CXAlertView *alertView);
 @property (nonatomic, assign) CGFloat contentScrollViewMaxHeight;
 @property (nonatomic, assign) CGFloat contentScrollViewMinHeight;
 @property (nonatomic, assign) CGFloat bottomScrollViewHeight;
+@property (nonatomic, strong) UIWindow *alertWindow;
 @property (nonatomic, assign) BOOL showButtonLine;
 @property (nonatomic, assign) BOOL showBlurBackground;
 // Create
