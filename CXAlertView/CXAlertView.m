@@ -145,6 +145,27 @@ static CXAlertView *__cx_alert_current_view;
 }
 #pragma mark - CXAlertView PB
 // Create
+
+
+- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle andButtonLineEnabled:(BOOL)buttonLine{
+    _vericalPadding = kDefaultVericalPadding;
+    _containerWidth = kDefaultContainerWidth;
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = [UIColor clearColor];
+    messageLabel.font = [UIFont systemFontOfSize:14.0];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.numberOfLines = 0;
+    messageLabel.text = message;
+    messageLabel.frame = CGRectMake( self.vericalPadding, 0, self.containerWidth - self.vericalPadding*2, [self heightWithText:message font:messageLabel.font]);
+    
+	messageLabel.lineBreakMode=LBM;
+    
+    return  [self initWithTitle:title contentView:messageLabel cancelButtonTitle:cancelButtonTitle andButtonLine:buttonLine];
+
+}
+
 - (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle
 {
     _vericalPadding = kDefaultVericalPadding;
@@ -185,8 +206,42 @@ static CXAlertView *__cx_alert_current_view;
 		_buttonFont=[UIFont systemFontOfSize:[UIFont buttonFontSize]];
 		_cancelButtonFont = [UIFont boldSystemFontOfSize:[UIFont buttonFontSize]];
 		_customButtonFont=_buttonFont;
-
+        
         _showButtonLine = YES;
+        _showBlurBackground = YES;
+        [self setupScrollViews];
+        if (cancelButtonTitle) {
+            [self addButtonWithTitle:cancelButtonTitle type:CXAlertViewButtonTypeCancel handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                [alertView dismiss];
+            }];
+        }
+    }
+    return self;
+}
+
+- (id)initWithTitle:(NSString *)title contentView:(UIView *)contentView cancelButtonTitle:(NSString *)cancelButtonTitle andButtonLine:(BOOL)buttonLine
+{
+    self = [super init];
+    if (self) {
+        _buttons = [[NSMutableArray alloc] init];
+        _title = title;
+        _contentView = contentView;
+        
+        _scrollViewPadding = kDefaultScrollViewPadding;
+        _buttonHeight = kDefaultButtonHeight;
+        _containerWidth = kDefaultContainerWidth;
+        _vericalPadding = kDefaultVericalPadding;
+        _topScrollViewMaxHeight = kDefaultTopScrollViewMaxHeight;
+        _topScrollViewMinHeight = kDefaultTopScrollViewMinHeight;
+        _contentScrollViewMaxHeight = kDefaultContentScrollViewMaxHeight;
+        _contentScrollViewMinHeight = kDefaultContentScrollViewMinHeight;
+        _bottomScrollViewHeight = kDefaultBottomScrollViewHeight;
+        
+		_buttonFont=[UIFont systemFontOfSize:[UIFont buttonFontSize]];
+		_cancelButtonFont = [UIFont boldSystemFontOfSize:[UIFont buttonFontSize]];
+		_customButtonFont=_buttonFont;
+        
+        _showButtonLine = buttonLine;
         _showBlurBackground = YES;
         [self setupScrollViews];
         if (cancelButtonTitle) {

@@ -68,4 +68,10 @@
 {
     return _rootViewControllerPrefersStatusBarHidden;
 }
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 @end
